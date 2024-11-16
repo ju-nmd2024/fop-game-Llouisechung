@@ -1,15 +1,34 @@
 function setup() {
   createCanvas(800, 600);
+  
 }
 
 
-let x= 350;
+let x= 200;
 let y= 100;
 
 noStroke();
 
 
+function planet(x, y){
+
+  push();
+  translate(0, 500);
+  fill(194, 178, 128);
+  rect(0,0, 800, 100);
+  pop();
+
+  push();
+  translate(200, 200);
+  fill(66, 56,35);
+  ellipse(0,0, 30, 20);
+  
+  
+  }
+
+
 function spaceship(x,y){
+
 
     //spaceship main body
 
@@ -195,11 +214,19 @@ pop();
 }
 
 
-
 function draw() {
+
   background(0,0,21);
+  planet(x,y);
 spaceship(x,y);
 
 
+if (y < 300) {
+  y = y + 6;
 }
+
+
+
+}
+
 
