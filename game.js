@@ -1,34 +1,22 @@
-function setup() {
-  createCanvas(800, 600);
-  
-}
 
-
-let x= 200;
+let x= 400;
 let y= 100;
+let gravity = 0.1;
+let gravitySpeed = 0;
+let thrust = 5;
 
-noStroke();
 
+function setup() {
+  createCanvas(1024,768);
+  noStroke();
+  y = height - 150;
 
-function planet(x, y){
-
-  push();
-  translate(0, 500);
-  fill(194, 178, 128);
-  rect(0,0, 800, 100);
-  pop();
-
-  push();
-  translate(200, 200);
-  fill(66, 56,35);
-  ellipse(0,0, 30, 20);
-  
-  
-  }
+}
 
 
 function spaceship(x,y){
 
+ 
 
     //spaceship main body
 
@@ -214,19 +202,46 @@ pop();
 }
 
 
+function planet(x, y){
+
+  let holes = [];
+
+  //planet floor
+  push();
+  fill(194, 178, 128);
+  rect(-10 ,600, 1100, 100);
+  pop();
+
+
+  }
+
+
 function draw() {
-
   background(0,0,21);
+  spaceship(x,y);
   planet(x,y);
-spaceship(x,y);
+  
+  
+//gravity movement down
+gravitySpeed += gravity;
+y += gravitySpeed;
 
+if (y > height - 300) {
+  y = height - 800;
+gravitySpeed = 0;
 
-if (y < 300) {
-  y = y + 6;
+}
+
+// movement up if arrow up key pressed
+if (keyIsPressed && keyCode === UP_ARROW) {
+  y -= thrust;
+  gravitySpeed = 0;
+  
+}
 }
 
 
 
-}
 
+ 
 
