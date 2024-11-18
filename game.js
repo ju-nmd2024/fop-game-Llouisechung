@@ -1,18 +1,31 @@
-
-let x= 400;
-let y= 100;
-let gravity = 0.1;
-let gravitySpeed = 0;
-let thrust = 5;
-
-
 function setup() {
-  createCanvas(1024,768);
+  createCanvas(1024, 768);
   noStroke();
-  y = height - 150;
 
 }
 
+let x= 512;
+let y= 100;
+
+let gravity = 0.1;
+let speed = 1;
+let groundY;
+let gameState = "You Lose!";
+
+//sparkling night sky (code from video example)
+let starX = [];
+let starY = [];
+let starAlpha = [];
+
+for (let i = 0; i < 70; i++) {
+  const x = Math.floor(Math.random() * width);
+  const y = Math.floor(Math.random() * height);
+  const alpha = Math.random();
+
+  starX.push(x);
+  starY.push(y);
+  starAlpha.push(alpha);
+}
 
 function spaceship(x,y){
 
@@ -201,44 +214,73 @@ pop();
 
 }
 
-
 function planet(x, y){
 
   let holes = [];
 
   //planet floor
   push();
-  fill(194, 178, 128);
-  rect(-10 ,600, 1100, 100);
+  fill(66, 56, 35);
+  rect(-10 ,700, 1100, 100);
   pop();
 
 
-  }
+}
 
+function startScreen() {}
+function resultScreen(){}
 
 function draw() {
-  background(0,0,21);
+
+  background(0);
+
+  //stars blinking 
+for (let index in starX) {
+  fill(255, 255, 255, Math.abs(Math.sin(starAlpha[index]) * 255));
+ellipse(starX[index], starY[index], 3);
+starAlpha[index] = starAlpha[index] + 0.03;
+}
+
   spaceship(x,y);
   planet(x,y);
+
+
+
+
   
-  
-//gravity movement down
-gravitySpeed += gravity;
-y += gravitySpeed;
+  if (!isGameOver) {
+    gravitySpeed += gravity;
+  y += gravitySpeed;
 
-if (y > height - 300) {
-  y = height - 800;
-gravitySpeed = 0;
-
-}
-
-// movement up if arrow up key pressed
-if (keyIsPressed && keyCode === UP_ARROW) {
-  y -= thrust;
+if (y > height - 250) {
+  y = height -250;
   gravitySpeed = 0;
+  isGameOver = true;
+ 
+  if (gravitySpeed < -2) {
+    result = "You Win!";
+  } else {
+    result = "You Lose!";
   
+  }
+  
+    
+  }
 }
 }
+
+
+
+
+
+
+      
+
+
+
+     
+
+
 
 
 
