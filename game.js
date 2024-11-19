@@ -1,9 +1,3 @@
-function setup() {
-  createCanvas(1024, 768);
-  noStroke();
-
-}
-
 let x= 512;
 let y= 100;
 
@@ -16,6 +10,13 @@ let gameState = "You Lose!";
 let starX = [];
 let starY = [];
 let starAlpha = [];
+
+
+function setup() {
+  createCanvas(1024, 768);
+  noStroke();
+
+}
 
 for (let i = 0; i < 70; i++) {
   const x = Math.floor(Math.random() * width);
@@ -227,45 +228,122 @@ function planet(x, y){
 
 }
 
-function startScreen() {}
-function resultScreen(){}
+function startScreen() {
+  //rectangle bar
+
+  push();
+  fill(100);
+  rect(390, 320, 230, 60, 100);
+  pop();
+
+//start text
+
+  push();
+  fill(255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  textFont('helvetica');
+  textStyle(BOLDITALIC);
+  text("PRESS START", 505, 350);
+  pop();
+
+  //"see you space cowboy- quote"
+
+  push();
+  fill(255);
+  textSize(25);
+  textFont('monospace');
+  textStyle(BOLDITALIC);
+  text("SEE YOU SPACE COWBOY...", 600, 650);
+  pop();
+}
+
+function gamePlay() {
+  spaceship(x,y);
+  if (keyIsPressed(32)) {
+    gravity = -0.03;
+  } else {
+    gravity = 0.03;
+  }
+
+  speed =speed + gravity;
+  y = y+ speed;
+  if (y > 560 && speed <= 2) { 
+  gameState = "gameSucceeded";
+  } else if (y > 560 && speed > 2)
+    gameState = "gameOver";
+}
+
+function gameWinning() {
+ 
+  push();
+  fill(255);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  textFont('monospace');
+  textStyle(BOLDITALIC);
+  text("LANDING SUCCESS!", 505, 250);
+  pop();
+}
+
+function gameOver() {
+  push();
+  fill(255);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  textFont('monospace');
+  textStyle(BOLDITALIC);
+  text("OOPS! TRY AGAIN", 505, 250);
+  pop();
+}
+
+function restart() {
+  //rectangle bar
+
+  push();
+  fill(100);
+  rect(390, 320, 230, 60, 100);
+  pop();
+
+  //restart text
+
+  push();
+  fill(255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  textFont('helvetica');
+  textStyle(BOLDITALIC);
+  text("RESTART", 505, 350);
+  pop();
+
+
+
+}
 
 function draw() {
-
   background(0);
+  spaceship(x,y);
+  planet(x,y);
+
+  //game stages
+
+  if (gameState === "start") {
+    startScreen();
+  } else if (gameState === "playing") {
+    gamePlay();
+  } else if (gameState === "gameOver") {
+    gameOver();
+    restart();
+  } else if (gameState === "gameSucceeded") {
+    gameWinning();
+    restart();
+  }
 
   //stars blinking 
 for (let index in starX) {
   fill(255, 255, 255, Math.abs(Math.sin(starAlpha[index]) * 255));
 ellipse(starX[index], starY[index], 3);
 starAlpha[index] = starAlpha[index] + 0.03;
-}
-
-  spaceship(x,y);
-  planet(x,y);
-
-
-
-
-  
-  if (!isGameOver) {
-    gravitySpeed += gravity;
-  y += gravitySpeed;
-
-if (y > height - 250) {
-  y = height -250;
-  gravitySpeed = 0;
-  isGameOver = true;
- 
-  if (gravitySpeed < -2) {
-    result = "You Win!";
-  } else {
-    result = "You Lose!";
-  
-  }
-  
-    
-  }
 }
 }
 
