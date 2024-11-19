@@ -4,7 +4,7 @@ let y= 100;
 let gravity = 0.1;
 let speed = 1;
 let groundY;
-let gameState = "You Lose!";
+let gameState = "start";
 
 //sparkling night sky (code from video example)
 let starX = [];
@@ -16,17 +16,19 @@ function setup() {
   createCanvas(1024, 768);
   noStroke();
 
+  //stars
+  for (let i = 0; i < 70; i++) {
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    const alpha = Math.random();
+  
+    starX.push(x);
+    starY.push(y);
+    starAlpha.push(alpha);
+  }
+
 }
 
-for (let i = 0; i < 70; i++) {
-  const x = Math.floor(Math.random() * width);
-  const y = Math.floor(Math.random() * height);
-  const alpha = Math.random();
-
-  starX.push(x);
-  starY.push(y);
-  starAlpha.push(alpha);
-}
 
 function spaceship(x,y){
 
@@ -260,13 +262,14 @@ function startScreen() {
 
 function gamePlay() {
   spaceship(x,y);
-  if (keyIsPressed(32)) {
-    gravity = -0.03;
+
+  if (keyIsPressed && keyCode === 32) {
+    gravity = -0.1;
   } else {
     gravity = 0.03;
   }
 
-  speed =speed + gravity;
+  speed += gravity;
   y = y+ speed;
   if (y > 560 && speed <= 2) { 
   gameState = "gameSucceeded";
@@ -356,26 +359,16 @@ function mouseClicked() {
     mouseY > 90 &&
     mouseY < 380
   ) {
-    gameState === "playing";
+    gameState = "playing";
     gravity =0.1;
     speed = 0.5;
-  } else if (gameState === "gameOver" &&
+  } else if ((gameState === "gameOver" || gameState === "gameSucceeded") &&
     mouseX > 230 && 
     mouseX < 620 &&
     mouseY > 90 &&
     mouseY < 380
   ) {
-    gameState === "start";
-    gravity =0.1;
-    speed = 0.5;
-    y = 100;
-  } else if (gameState === "gameSucceeded" &&
-    mouseX > 230 && 
-    mouseX < 620 &&
-    mouseY > 90 &&
-    mouseY < 380
-  ) {
-    gameState === "start";
+    gameState = "start";
     gravity =0.1;
     speed = 0.5;
     y = 100;
