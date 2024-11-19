@@ -325,6 +325,8 @@ function draw() {
   spaceship(x,y);
   planet(x,y);
 
+
+
   //game stages
 
   if (gameState === "start") {
@@ -345,6 +347,39 @@ for (let index in starX) {
 ellipse(starX[index], starY[index], 3);
 starAlpha[index] = starAlpha[index] + 0.03;
 }
+}
+
+function mouseClicked() {
+  if (gameState === "start" &&
+    mouseX > 230 && 
+    mouseX < 620 &&
+    mouseY > 90 &&
+    mouseY < 380
+  ) {
+    gameState === "playing";
+    gravity =0.1;
+    speed = 0.5;
+  } else if (gameState === "gameOver" &&
+    mouseX > 230 && 
+    mouseX < 620 &&
+    mouseY > 90 &&
+    mouseY < 380
+  ) {
+    gameState === "start";
+    gravity =0.1;
+    speed = 0.5;
+    y = 100;
+  } else if (gameState === "gameSucceeded" &&
+    mouseX > 230 && 
+    mouseX < 620 &&
+    mouseY > 90 &&
+    mouseY < 380
+  ) {
+    gameState === "start";
+    gravity =0.1;
+    speed = 0.5;
+    y = 100;
+  }
 }
 
 
