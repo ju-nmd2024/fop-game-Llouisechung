@@ -1,5 +1,5 @@
 let x= 512;
-let y= 100;
+let y= 10;
 
 let gravity = 0.1;
 let speed = 1;
@@ -17,7 +17,7 @@ function setup() {
   noStroke();
 
   //stars
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < 80; i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
     const alpha = Math.random();
@@ -231,11 +231,19 @@ function planet(x, y){
 }
 
 function startScreen() {
+  //black screen 
+
+  push(); 
+    fill(0);
+    rect(0, 0, 1024, 768);
+    pop();
+  
+
   //rectangle bar
 
   push();
-  fill(100);
-  rect(390, 320, 230, 60, 100);
+  fill(109, 7, 26);
+  rect(393, 320, 230, 60, 100);
   pop();
 
 //start text
@@ -253,10 +261,10 @@ function startScreen() {
 
   push();
   fill(255);
-  textSize(25);
+  textSize(27);
   textFont('monospace');
   textStyle(BOLDITALIC);
-  text("SEE YOU SPACE COWBOY...", 600, 650);
+  text("SEE YOU SPACE COWBOY...", 570, 700);
   pop();
 }
 
@@ -264,17 +272,20 @@ function gamePlay() {
   spaceship(x,y);
 
   if (keyIsPressed && keyCode === 32) {
-    gravity = -0.1;
+    gravity = -1;
+    
   } else {
-    gravity = 0.03;
+    gravity = 0.3;
   }
 
-  speed += gravity;
+  speed =speed + gravity;
   y = y+ speed;
   if (y > 560 && speed <= 2) { 
   gameState = "gameSucceeded";
   } else if (y > 560 && speed > 2)
     gameState = "gameOver";
+
+
 }
 
 function gameWinning() {
@@ -285,11 +296,13 @@ function gameWinning() {
   textAlign(CENTER, CENTER);
   textFont('monospace');
   textStyle(BOLDITALIC);
-  text("LANDING SUCCESS!", 505, 250);
+  text("LANDING SUCCESSFULL!", 505, 250);
   pop();
 }
 
 function gameOver() {
+  //game over text
+
   push();
   fill(255);
   textSize(40);
@@ -298,6 +311,44 @@ function gameOver() {
   textStyle(BOLDITALIC);
   text("OOPS! TRY AGAIN", 505, 250);
   pop();
+
+}
+
+function Smoke() {
+
+  
+  push();
+  
+  fill(255,21,0);
+  ellipse(510, 700, 10, 10);
+  
+  fill(50);
+  ellipse(500, 700, 20, 20);
+  
+  fill(255,64,0);
+  ellipse(490, 700, 30, 30);
+  
+  fill(70);
+  ellipse(470, 700, 40, 40);
+  
+  fill(255,165,0);
+  ellipse(450, 680, 50, 50);
+  
+  fill(100);
+  ellipse(400, 660, 80, 70);
+  
+  fill(150);
+  ellipse(360, 640, 100, 100);
+  ellipse(340, 620, 130, 120);
+  
+  fill(160);
+  ellipse(250, 590, 150, 150);
+  ellipse(340, 460, 150, 160);
+  fill(160);
+  ellipse(250, 450, 150, 180);
+  ellipse(190, 500, 200, 180);
+  pop();
+
 }
 
 function restart() {
@@ -338,6 +389,7 @@ function draw() {
     gamePlay();
   } else if (gameState === "gameOver") {
     gameOver();
+    Smoke();
     restart();
   } else if (gameState === "gameSucceeded") {
     gameWinning();
